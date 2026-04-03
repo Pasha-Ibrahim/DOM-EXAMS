@@ -1,3 +1,5 @@
+const colorsContainer = document.getElementById("colorsContainer");
+
 const colors = [
   { name: "qirmizi", code: "red" },
   { name: "yasil", code: "green" },
@@ -20,24 +22,33 @@ const colors = [
   { name: "dəniz mavisi", code: "navy" },
 ];
 
-const colorsContainer = document.getElementById("colorsContainer");
-
 const showColors = () => {
   colorsContainer.innerHTML = "";
   colors.forEach((color) => {
     colorsContainer.innerHTML += `<div class="color"
         style="background:${color.code}"
-        onclick="setBodyBgColor('${color.code}')"
+        onclick="setBodyBgColor('${color.code}', '${color.name}')"
         ></div>`;
   });
 };
 showColors();
 
-const setBodyBgColor = (color) => {
-  const activeColor = document.body.style.backgroundColor;
-  if (activeColor !== color) {
-    document.body.style.backgroundColor = color;
-  } else {
-    document.body.style.backgroundColor = "white";
-  }
+const setBodyBgColor = (color, name) => {
+  document.body.style.backgroundColor = color;
+  
+  // Əgər əvvəlcə artıq varsa silirik
+  const existing = document.getElementById("colorLabel");
+  if (existing) existing.remove();
+  
+  // Yeni rəng adı əlavə edirik
+  const label = document.createElement("div");
+  label.id = "colorLabel";
+  label.textContent = name;
+  label.style.position = "fixed";
+  label.style.top = "50%";
+  label.style.left = "50%";
+  label.style.fontSize = "24px";
+  label.style.fontWeight = "bold";
+  label.style.color = "#000";
+  document.body.appendChild(label);
 };
